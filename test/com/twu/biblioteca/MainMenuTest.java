@@ -298,5 +298,20 @@ public class MainMenuTest {
                 , MainMenuOutput.toString());
     }*/
 
+    //******************* (2.4) User accounts: Login and View my information *********************************** //
+
+    @Test
+    public void ViewMyInformation(){
+        options = new ArrayList<>(Arrays.asList(option9));
+        mainMenu = new MainMenu(options,bookRepository,movieRepository,userRepository);
+        System.setIn(new ByteArrayInputStream("1".getBytes()));
+        MainMenu.LoginID_Now = "5102636";
+        MainMenuOutput = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(MainMenuOutput));
+        mainMenu.UserSelectOptions();
+        assertEquals("** UserID ** | ** UserName ** | ** PassWord **     | ** Email **     \n" +
+                        "5102636      | Luna           | moneymoneymoney    | unswluna@gmail.com\n"
+                , MainMenuOutput.toString());
+    }
 
 }

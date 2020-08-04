@@ -4,6 +4,7 @@ import com.twu.biblioteca.book.Book;
 import com.twu.biblioteca.book.BookRepository;
 import com.twu.biblioteca.movie.Movie;
 import com.twu.biblioteca.movie.MovieRepository;
+import com.twu.biblioteca.user.User;
 import com.twu.biblioteca.user.UserRepository;
 
 import java.util.ArrayList;
@@ -24,6 +25,7 @@ public class MainMenu {
     private String UserID;
     private String password;
     private static String UserSelectedOption;
+    public static String LoginID_Now;
 
     public MainMenu(List<String> options, BookRepository bookRepository, MovieRepository movieRepository, UserRepository userRepository){
         this.options = options;
@@ -36,6 +38,35 @@ public class MainMenu {
     public static void PrintAllMenuList(){
         System.out.println("What would you like to do?");
         IntStream.range(0, options.size()).forEach(i -> System.out.println("Enter "+ (i + 1) + " : " + options.get(i)));
+    }
+
+    public void login(){
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Please input your UserID: ");
+        UserID = scanner.nextLine();
+        System.out.println("Please input your Password: ");
+        password = scanner.nextLine();
+        //System.out.println("Please click return");
+        //UserSelectedOption = scanner.nextLine();
+        if(UserID == "\n"  ){
+            System.out.println("UserID cannot be empty!");
+            login();
+        }
+        if(password =="\n" ){
+            System.out.println("UserID cannot be empty!");
+            login();
+        }
+
+        if (UserRepository.areValidCredentials(UserID,password)){
+            System.out.println("UserID : "+ UserID+"\n"+
+                    "Successful login\n------------------------------------------------------");
+            LoginID_Now = UserID;
+            PrintAllMenuList();
+            UserSelectOptions();
+        }else{
+            System.out.println("Sorry that's not a valid ID/PASSWORD");
+            login();
+        }
     }
 
     //检查输入项是否有效
@@ -92,7 +123,9 @@ public class MainMenu {
                     case "View books checked out":
                         displayCheckOutBook();
                         break;
-
+                    case "View my information":
+                        ViewMyInformation(LoginID_Now);
+                        break;
                     case "Quit":
                         //System.out.println("Goodbye!");
                         System.exit(0);
@@ -160,6 +193,12 @@ public class MainMenu {
         System.out.println(movieRepository.returnMovie(input)? "Thanks for your return, have a good day" : "This movie may not borrowed from our library, please contact the librarian if not.");
     }
 
+    private static void ViewMyInformation(String userID) {
+        System.out.printf("%-13s%-2s%-15s%-2s%-19s%-2s%-16s%n","** UserID **","|","** UserName **","|", "** PassWord **","|", "** Email **");
+        User USER = UserRepository.getUser(userID);
+        System.out.printf("%-13s%-2s%-15s%-2s%-19s%-2s%-16s%n", USER.getUserID(),"|",USER.getUserName(), "|",
+                USER.getPassword(), "|", USER.getEmail());
+    }
 
 
 }

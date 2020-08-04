@@ -1,5 +1,8 @@
 package com.twu.biblioteca;
 
+import com.twu.biblioteca.book.BookRepository;
+import com.twu.biblioteca.movie.MovieRepository;
+import com.twu.biblioteca.user.UserRepository;
 import org.junit.Before;
 import org.junit.jupiter.api.Test;
 
@@ -11,6 +14,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 
 public class MainMunuTest {
     private List<String> options;
@@ -27,7 +31,9 @@ public class MainMunuTest {
     private static String option8 = "View books checked out";
     private static String option9 = "View my information";
     private static String option10 = "Quit";
-
+    BookRepository bookRepository = new BookRepository(BookRepository.availableBooks);
+    MovieRepository movieRepository = new MovieRepository(MovieRepository.availableMovies);
+    UserRepository userRepository = new UserRepository(UserRepository.availableUserInformations);
 
     //****************************  (1.4) View main menu of options ****************************** //
     @Test
@@ -96,5 +102,27 @@ public class MainMunuTest {
                         "Please try again!\n"
                 , MainMenuOutput.toString());
     }
+
+    //*********************************** （1.2）查看书籍清单 *********************************** //
+    // 1. 有效选项 => 没有报错
+    // 2. 选择1 则出现完整的书籍信息
+
+    @Test // 选择了有效的选项，则没有报错
+    public void GetNotifiedWhenChosevalidOption(){
+        options = new ArrayList<>(Arrays.asList(option1));
+        mainMenu = new MainMenu(options,bookRepository,movieRepository,userRepository);
+        System.setIn(new ByteArrayInputStream("1".getBytes()));
+        mainMenu.UserSelectOptions();
+        assertNotEquals(InvalidOption + "\n", MainMenuOutput.toString());
+    }
+
+
+
+
+
+
+
+
+
 
 }

@@ -34,5 +34,38 @@ public class MainMenu {
         IntStream.range(0, options.size()).forEach(i -> System.out.println("Enter "+ (i + 1) + " : " + options.get(i)));
     }
 
+    //检查输入项是否有效
+    //1. 有输入 2. 是个数字 3. 数字在选项的list中
+    private boolean CheckInputIsValid(String option){
+        int InputNumber;
+        try {
+            InputNumber = Integer.valueOf(option);
+        }
+        catch(NumberFormatException e){
+            System.out.println("Please select a valid option");
+            return false;
+        }
+        if (InputNumber <= 0 || InputNumber > options.size()){
+            System.out.println("Please select a valid option");
+            return false;
+        }
+        return true;
+    }
 
+    public void UserSelectOptions() {
+        Scanner scanner = new Scanner(System.in);
+        if(scanner.hasNext()) { // User's choice, otherwise waiting
+            UserSelectedOption = scanner.nextLine();
+            if (CheckInputIsValid(UserSelectedOption)) {
+                System.out.println("Success");
+
+            } else {
+                System.out.println("------------------------------------------------------");
+                System.out.println("Please try again!");
+                UserSelectOptions();
+            }
+        }
+
+    }
 }
+

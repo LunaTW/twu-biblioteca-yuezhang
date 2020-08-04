@@ -51,6 +51,50 @@ public class MainMunuTest {
     }
 
     //*********************************** 1.5 当我选择无效选项时得到通知 *********************************** //
+    @Test //此时只有一个option,只有 1 是正确的，其他如 100，list，-8，3.5 均无效
+    public void GetNotifiedWhenChoseInvalidOption_OtherNumber_Decimal_NegativeNumber_NonNumber(){
+        options = new ArrayList<>(Arrays.asList(option1));
+        mainMenu = new MainMenu(options,null,null,null);
 
+        // 测试超过选择的正整数不能通过
+        MainMenuOutput = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(MainMenuOutput));
+        System.setIn(new ByteArrayInputStream("100".getBytes()));
+        mainMenu.UserSelectOptions();
+        assertEquals(InvalidOption + "\n"+
+                "------------------------------------------------------\n"+
+                "Please try again!\n"
+                , MainMenuOutput.toString());
+
+        // 测试小数不能通过验证
+        MainMenuOutput = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(MainMenuOutput));
+        System.setIn(new ByteArrayInputStream("2.5".getBytes()));
+        mainMenu.UserSelectOptions();
+        assertEquals(InvalidOption + "\n"+
+                        "------------------------------------------------------\n"+
+                        "Please try again!\n"
+                , MainMenuOutput.toString());
+
+        // 测试负数不能通过验证
+        MainMenuOutput = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(MainMenuOutput));
+        System.setIn(new ByteArrayInputStream("-3".getBytes()));
+        mainMenu.UserSelectOptions();
+        assertEquals(InvalidOption + "\n"+
+                        "------------------------------------------------------\n"+
+                        "Please try again!\n"
+                , MainMenuOutput.toString());
+
+        // 测试非数字类不能通过验证
+        MainMenuOutput = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(MainMenuOutput));
+        System.setIn(new ByteArrayInputStream("list of book".getBytes()));
+        mainMenu.UserSelectOptions();
+        assertEquals(InvalidOption + "\n"+
+                        "------------------------------------------------------\n"+
+                        "Please try again!\n"
+                , MainMenuOutput.toString());
+    }
 
 }

@@ -4,7 +4,10 @@ import com.twu.biblioteca.book.BookRepository;
 import com.twu.biblioteca.movie.MovieRepository;
 import com.twu.biblioteca.user.UserRepository;
 import org.junit.Before;
+import org.junit.Ignore;
+import org.junit.Rule;
 import org.junit.jupiter.api.Test;
+import org.junit.contrib.java.lang.system.ExpectedSystemExit;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -34,6 +37,9 @@ public class MainMunuTest {
     BookRepository bookRepository = new BookRepository(BookRepository.availableBooks);
     MovieRepository movieRepository = new MovieRepository(MovieRepository.availableMovies);
     UserRepository userRepository = new UserRepository(UserRepository.availableUserInformations);
+
+    //@Rule
+    //public final ExpectedSystemExit exit = ExpectedSystemExit.none();
 
     //****************************  (1.4) View main menu of options ****************************** //
     @Test
@@ -161,8 +167,95 @@ public class MainMunuTest {
         assertThat(MainMenuOutput.toString(),containsString("Sorry, that book is not available."));
     }
 
+    //*********************************** (1.10) Return a book *********************************** //
+    /*  1. 正确还书（已借出书单里有这本书）=> 可借书单里添加了这本书 & 已借出书单里删除了这本书 (1.11) Notified on successful return
+        2. 错误借书 已借出书单里无此书 => 此书暂时不可还，【不属于这个图书馆或找管理员咨询】(1.12) Notified on unsuccessful return
+     */
+    @Test
+    public void RetrunABook_Successfully(){
+        // 还书之前，"Happy Coding" 在已借出书单，不在可借书单 ==> 还书之后，"Happy Coding" 从已借出书单消失，出现在可借书单上
+        assertEquals(BookRepository.availableBooks.stream().filter(book -> book.getTitle().equals("Happy Coding")).findFirst().orElse(null),null);
+        assertNotEquals(BookRepository.checkedOutBooks.stream().filter(book -> book.getTitle().equals("Happy Coding")).findFirst().orElse(null),null);
+        options = new ArrayList<>(Arrays.asList(option1,option2,option3));
+        mainMenu = new MainMenu(options,bookRepository,movieRepository,userRepository);
+        System.setIn(new ByteArrayInputStream("3\nHappy Coding".getBytes()));
+        MainMenuOutput = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(MainMenuOutput));
+        mainMenu.UserSelectOptions();
+        assertNotEquals(BookRepository.availableBooks.stream().filter(book -> book.getTitle().equals("Happy Coding")).findFirst().orElse(null),null);
+        assertEquals(BookRepository.checkedOutBooks.stream().filter(book -> book.getTitle().equals("Happy Coding")).findFirst().orElse(null),null);
+    }
 
+    @Test //非本图书馆借出的书籍无法归还
+    public void RetrunABook_Unsuccessfully(){
+        options = new ArrayList<>(Arrays.asList(option1,option2,option3));
+        mainMenu = new MainMenu(options,bookRepository,movieRepository,userRepository);
+        System.setIn(new ByteArrayInputStream("3\nHappy Studying".getBytes()));
+        MainMenuOutput = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(MainMenuOutput));
+        mainMenu.UserSelectOptions();
+        assertThat(MainMenuOutput.toString(),containsString("This book may not borrowed from our library, please contact the librarian if not."));
+    }
 
+    //*********************************** (1.6) Quit the application *********************************** //
+    /*
+    @Ignore
+    @Test //Question import exit出现问题，在contrib标红色【line14,line40 - line42】
+    public void QuitTheApplication(){
+        options = new ArrayList<>(Arrays.asList(option1,option2,option3,option10));
+        mainMenu = new MainMenu(options,bookRepository,movieRepository,userRepository);
+
+        System.setIn(new ByteArrayInputStream("4".getBytes()));
+        //exit.expectSystemExit();
+        mainMenu.UserSelectOptions();
+    }
+    */
+
+    //*********************************** (2.1) View a list of available movies *********************************** //
+    @Test //包含了完成的电影信息 option4
+    public void ViewAListOfMovies(){
+        options = new ArrayList<>(Arrays.asList(option1,option2,option3,option4,option10));
+        mainMenu = new MainMenu(options,bookRepository,movieRepository,userRepository);
+        System.setIn(new ByteArrayInputStream("4".getBytes()));
+        MainMenuOutput = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(MainMenuOutput));
+        mainMenu.UserSelectOptions();
+        assertEquals("** Title **                   | ** Director **                | ** Year **\n" +
+                        "Green Book                    | Peter Farrelly                | 2018  \n" +
+                        "The Shawshank Redemption      | Frank Darabont                | 1994  \n" +
+                        "The Godfather                 | Francis Ford Coppola          | 1972  \n" +
+                        "The Godfather: Part II        | Francis Ford Coppola          | 1974  \n"  +
+                        "------------------------------------------------------\n"+
+                        "What would you like to do?\n" +"Enter 1 : View a list of books\n"+"Enter 2 : Checkout a book\n"+
+                        "Enter 3 : Return a book\n"+"Enter 4 : View a list of movies\n"+"Enter 5 : Quit\n", MainMenuOutput.toString());
+    }
+
+    //*********************************** (2.2) Checkout a movie *********************************** //
+    @Test
+    public void CheckoutMovie_Successfully(){
+        options = new ArrayList<>(Arrays.asList(option1,option2,option3,option4,option5,option10));
+        mainMenu = new MainMenu(options,bookRepository,movieRepository,userRepository);
+        assertNotEquals(MovieRepository.availableMovies.stream().filter(movie -> movie.getTitle().equals("The Shawshank Redemption")).findFirst().orElse(null),null);
+        System.setIn(new ByteArrayInputStream("5\nThe Shawshank Redemption".getBytes()));
+        MainMenuOutput = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(MainMenuOutput));
+        mainMenu.UserSelectOptions();
+        assertEquals(MovieRepository.availableMovies.stream().filter(movie -> movie.getTitle().equals("The Shawshank Redemption")).findFirst().orElse(null),null);
+        assertThat(MainMenuOutput.toString(),containsString("Thank you! Enjoy the movie."));
+    }
+
+    @Test
+    public void CheckoutMovie_Unsuccessfully(){
+        options = new ArrayList<>(Arrays.asList(option1,option2,option3,option4,option5,option10));
+        mainMenu = new MainMenu(options,bookRepository,movieRepository,userRepository);
+        System.setIn(new ByteArrayInputStream("5\nNotExisted Movie Name".getBytes()));
+        MainMenuOutput = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(MainMenuOutput));
+        mainMenu.UserSelectOptions();
+        assertThat(MainMenuOutput.toString(),containsString("Sorry, that movie is not available."));
+    }
+
+    
 
 
 

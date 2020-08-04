@@ -2,6 +2,7 @@ package com.twu.biblioteca;
 
 import com.twu.biblioteca.book.Book;
 import com.twu.biblioteca.book.BookRepository;
+import com.twu.biblioteca.movie.Movie;
 import com.twu.biblioteca.movie.MovieRepository;
 import com.twu.biblioteca.user.UserRepository;
 
@@ -15,11 +16,11 @@ import java.util.stream.IntStream;
 public class MainMenu {
     private static List<String> options;
     private static BookRepository bookRepository;
-    private MovieRepository movieRepository;
-    private UserRepository userRepository;
+    private static MovieRepository movieRepository;
+    private static UserRepository userRepository;
     private Scanner scanner;
     private static String bookName;
-    private String movieName;
+    private static String movieName;
     private String UserID;
     private String password;
     private static String UserSelectedOption;
@@ -70,7 +71,28 @@ public class MainMenu {
                         bookName = scanner.nextLine();
                         checkOutBook(bookName);
                         break;
+                    case "Return a book":
+                        System.out.println("Which book would you like to Return?[Please input BOOK NAME]");
+                        bookName = scanner.nextLine();
+                        returnBook(bookName);
+                        break;
 
+                    case "View a list of movies":
+                        displayMovies();
+                        break;
+
+                    case "Checkout a movie":
+                        System.out.println("Which movie would you like to checkout?[Please input MOVIE NAME]");
+                        movieName = scanner.nextLine();
+                        checkOutMovie(movieName);
+                        break;
+
+
+
+                    case "Quit":
+                        //System.out.println("Goodbye!");
+                        System.exit(0);
+                        break;
                 }
 
 
@@ -101,5 +123,24 @@ public class MainMenu {
         System.out.println(bookRepository.checkOutBook(input)? "Thank you! Enjoy the book." : "Sorry, that book is not available.");
     }
 
+    private static void returnBook(String bookName){
+        String input = bookName;
+        System.out.println(bookRepository.returnBook(input)? "Thanks for your return, have a good day!" : "This book may not borrowed from our library, please contact the librarian if not.");
+    }
+
+    private static void displayMovies(){
+        System.out.printf("%-30s%-2s%-30s%-2s%-6s%n","** Title **","|", "** Director **","|","** Year **");
+        for(Movie movie:movieRepository.getAvailableMovies()){
+            System.out.printf("%-30s%-2s%-30s%-2s%-6s%n", movie.getTitle(),"|",movie.getDirector(),"|",movie.getYear());
+        }
+        System.out.println("------------------------------------------------------");
+        PrintAllMenuList();
+        UserSelectOptions();
+    }
+
+    private static void checkOutMovie(String movieName){
+        String input = movieName;
+        System.out.println(movieRepository.checkOutMovie(input)? "Thank you! Enjoy the movie." : "Sorry, that movie is not available.");
+    }
 }
 

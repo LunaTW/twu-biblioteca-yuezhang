@@ -1,5 +1,6 @@
 package com.twu.biblioteca;
 
+import com.twu.biblioteca.book.Book;
 import com.twu.biblioteca.book.BookRepository;
 import com.twu.biblioteca.movie.MovieRepository;
 import com.twu.biblioteca.user.UserRepository;
@@ -11,8 +12,8 @@ import java.util.Scanner;
 import java.util.stream.IntStream;
 
 public class MainMenu {
-    private List<String> options;
-    private BookRepository bookRepository;
+    private static List<String> options;
+    private static BookRepository bookRepository;
     private MovieRepository movieRepository;
     private UserRepository userRepository;
     private Scanner scanner;
@@ -20,7 +21,7 @@ public class MainMenu {
     private String movieName;
     private String UserID;
     private String password;
-    private String UserSelectedOption;
+    private static String UserSelectedOption;
 
     public MainMenu(List<String> options, BookRepository bookRepository, MovieRepository movieRepository, UserRepository userRepository){
         this.options = options;
@@ -29,14 +30,15 @@ public class MainMenu {
         this.userRepository = userRepository;
     }
 
-    public void PrintAllMenuList(){
+
+    public static void PrintAllMenuList(){
         System.out.println("What would you like to do?");
         IntStream.range(0, options.size()).forEach(i -> System.out.println("Enter "+ (i + 1) + " : " + options.get(i)));
     }
 
     //检查输入项是否有效
     //1. 有输入 2. 是个数字 3. 数字在选项的list中
-    private boolean CheckInputIsValid(String option){
+    private static boolean CheckInputIsValid(String option){
         int InputNumber;
         try {
             InputNumber = Integer.valueOf(option);
@@ -52,12 +54,18 @@ public class MainMenu {
         return true;
     }
 
-    public void UserSelectOptions() {
+    public static void UserSelectOptions() {
         Scanner scanner = new Scanner(System.in);
         if(scanner.hasNext()) { // User's choice, otherwise waiting
             UserSelectedOption = scanner.nextLine();
             if (CheckInputIsValid(UserSelectedOption)) {
-                System.out.println("Success");
+                String optionChoice = options.get(Integer.valueOf(UserSelectedOption) - 1); //index 比本身小1
+                switch (optionChoice){
+                    case "View a list of books":
+                        displayBooks();
+                        break;
+                }
+
 
             } else {
                 System.out.println("------------------------------------------------------");
@@ -67,5 +75,19 @@ public class MainMenu {
         }
 
     }
+
+
+    //************************************* Function ********************************//
+    private static void displayBooks(){
+        System.out.printf("%-11s%-2s%-30s%-2s%-30s%-2s%-15s%-2s%-6s%n","** Index **","|","** Title **","|", "** Author **","|", "** ISBN **", "|","** Year **");
+        for (Book book: bookRepository.getAvailableBooks()){
+            System.out.printf("%-11s%-2s%-30s%-2s%-30s%-2s%-15s%-2s%-6s%n", book.getindex(),"|",book.getTitle(), "|",
+                    book.getAuthor(), "|", book.getIsbn(), "|", book.getYear());
+        }
+        System.out.println("------------------------------------------------------");
+        PrintAllMenuList();
+        UserSelectOptions();
+    }
+
 }
 

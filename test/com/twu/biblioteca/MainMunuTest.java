@@ -107,13 +107,28 @@ public class MainMunuTest {
     // 1. 有效选项 => 没有报错
     // 2. 选择1 则出现完整的书籍信息
 
-    @Test // 选择了有效的选项，则没有报错
-    public void GetNotifiedWhenChosevalidOption(){
+    @Test
+    public void ViewAListOfBooks(){
         options = new ArrayList<>(Arrays.asList(option1));
         mainMenu = new MainMenu(options,bookRepository,movieRepository,userRepository);
+        MainMenuOutput = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(MainMenuOutput));
         System.setIn(new ByteArrayInputStream("1".getBytes()));
         mainMenu.UserSelectOptions();
-        assertNotEquals(InvalidOption + "\n", MainMenuOutput.toString());
+
+        // 选择了有效的选项，则没有报错
+        assertNotEquals(InvalidOption + "\n"+
+                        "------------------------------------------------------\n"+
+                        "Please try again!\n" , MainMenuOutput.toString());
+
+        //包含了完成的书籍信息
+        assertEquals("** Index **| ** Title **                   | ** Author **                  | ** ISBN **     | ** Year **\n" +
+                        "01         | The little prince             | Antoine de Saint-Exupery      | 9787539998312  | 2017  \n" +
+                        "02         | And Then There were none      | Agatha Christie               | 9780007136834  | 2007  \n" +
+                        "03         | Harry Potter                  | Joanne Rowling                | 9573317249234  | 2008  \n" +
+                        "------------------------------------------------------\n"+
+                        "What would you like to do?\n" +
+                        "Enter 1 : View a list of books\n"  , MainMenuOutput.toString());
     }
 
 

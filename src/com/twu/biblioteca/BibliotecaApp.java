@@ -1,5 +1,9 @@
 package com.twu.biblioteca;
 
+import com.sun.tools.javac.Main;
+import com.twu.biblioteca.book.BookRepository;
+import com.twu.biblioteca.movie.MovieRepository;
+import com.twu.biblioteca.user.UserRepository;
 import com.twu.biblioteca.welcome.WelcomeMessage;
 
 import java.util.ArrayList;
@@ -19,13 +23,14 @@ public class BibliotecaApp {
                 "View books checked out",
                 "View my information",
                 "Quit"));
-    //    BookRepository bookRepository = new BookRepository(BookRepository.availableBooks);
-    //    MovieRepository movieRepository = new MovieRepository(MovieRepository.availableMovies);
-    //    UserRepository userRepository = new UserRepository(UserRepository.availableUserInformations);
-
-
-
+        BookRepository bookRepository = new BookRepository(BookRepository.availableBooks);
+        MovieRepository movieRepository = new MovieRepository(MovieRepository.availableMovies);
+        UserRepository userRepository = new UserRepository(UserRepository.availableUserInformations);
 
         WelcomeMessage.WelcomeMessageInScreen();
+        MainMenu MainMenu = new MainMenu(options,bookRepository,movieRepository,userRepository);
+
+        MainMenu.PrintAllMenuList();
+        MainMenu.UserSelectOptions();
     }
 }

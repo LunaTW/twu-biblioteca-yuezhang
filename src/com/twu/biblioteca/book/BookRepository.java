@@ -26,7 +26,7 @@ public class BookRepository {
     public BookRepository(List<Book> books){
     }
 
-    public void addBook(Book book) {
+    public static void addBook(Book book) {
         availableBooks.add(book);
     }
 

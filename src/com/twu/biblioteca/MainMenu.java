@@ -76,17 +76,19 @@ public class MainMenu {
                         bookName = scanner.nextLine();
                         returnBook(bookName);
                         break;
-
                     case "View a list of movies":
                         displayMovies();
                         break;
-
                     case "Checkout a movie":
                         System.out.println("Which movie would you like to checkout?[Please input MOVIE NAME]");
                         movieName = scanner.nextLine();
                         checkOutMovie(movieName);
                         break;
-
+                    case "Return a movie":
+                        System.out.println("Which movie would you like to Return?[Please input MOVIE NAME]");
+                        movieName = scanner.nextLine();
+                        returnMovie(movieName);
+                        break;
 
 
                     case "Quit":
@@ -141,6 +143,11 @@ public class MainMenu {
     private static void checkOutMovie(String movieName){
         String input = movieName;
         System.out.println(movieRepository.checkOutMovie(input)? "Thank you! Enjoy the movie." : "Sorry, that movie is not available.");
+    }
+
+    private static void returnMovie(String movieName){
+        String input = movieName;
+        System.out.println(movieRepository.returnMovie(input)? "Thanks for your return, have a good day" : "This movie may not borrowed from our library, please contact the librarian if not.");
     }
 }
 

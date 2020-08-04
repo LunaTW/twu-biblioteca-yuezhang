@@ -255,8 +255,32 @@ public class MainMunuTest {
         assertThat(MainMenuOutput.toString(),containsString("Sorry, that movie is not available."));
     }
 
-    
+    //******************* (2.2) - extend -- Return a movie *********************************** //
+    @Test
+    public void ReturnMovie_Successfully(){
+        assertEquals(MovieRepository.availableMovies.stream().filter(movie -> movie.getTitle().equals("Back to the Future")).findFirst().orElse(null),null);
+        assertNotEquals(MovieRepository.checkedOutMovies.stream().filter(movie -> movie.getTitle().equals("Back to the Future")).findFirst().orElse(null),null);
+        options = new ArrayList<>(Arrays.asList(option1,option2,option3,option4,option5,option6,option10));
+        mainMenu = new MainMenu(options,bookRepository,movieRepository,userRepository);
+        System.setIn(new ByteArrayInputStream("6\nBack to the Future".getBytes()));
+        MainMenuOutput = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(MainMenuOutput));
+        mainMenu.UserSelectOptions();
+        assertNotEquals(MovieRepository.availableMovies.stream().filter(movie -> movie.getTitle().equals("Back to the Future")).findFirst().orElse(null),null);
+        assertEquals(MovieRepository.checkedOutMovies.stream().filter(movie -> movie.getTitle().equals("Back to the Future")).findFirst().orElse(null),null);
+    }
 
+    @Test
+    public void ReturnMovie_Unsuccessfully(){
+        options = new ArrayList<>(Arrays.asList(option1,option2,option3,option4,option5,option6,option10));
+        mainMenu = new MainMenu(options,bookRepository,movieRepository,userRepository);
+        System.setIn(new ByteArrayInputStream("6\nINVALID MOVIE NAME".getBytes()));
+        MainMenuOutput = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(MainMenuOutput));
+        mainMenu.UserSelectOptions();
+        assertEquals(MovieRepository.availableMovies.stream().filter(movie -> movie.getTitle().equals("INVALID MOVIE NAME")).findFirst().orElse(null),null);
+        assertThat(MainMenuOutput.toString(),containsString("This movie may not borrowed from our library, please contact the librarian if not."));
+    }
 
 
 }

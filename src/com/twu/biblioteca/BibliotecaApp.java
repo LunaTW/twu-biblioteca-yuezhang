@@ -31,6 +31,6 @@ public class BibliotecaApp {
         MainMenu MainMenu = new MainMenu(options,bookRepository,movieRepository,userRepository);
 
         MainMenu.PrintAllMenuList();
-        MainMenu.UserSelectOptions();
+        MainMenu.login();
     }
 }

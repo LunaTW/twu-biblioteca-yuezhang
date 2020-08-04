@@ -122,10 +122,10 @@ public class MainMunuTest {
                         "Please try again!\n" , MainMenuOutput.toString());
 
         //包含了完成的书籍信息
-        assertEquals("** Index **| ** Title **                   | ** Author **                  | ** ISBN **     | ** Year **\n" +
-                        "01         | The little prince             | Antoine de Saint-Exupery      | 9787539998312  | 2017  \n" +
-                        "02         | And Then There were none      | Agatha Christie               | 9780007136834  | 2007  \n" +
-                        "03         | Harry Potter                  | Joanne Rowling                | 9573317249234  | 2008  \n" +
+        assertEquals("** Index **| ** Title **                   | ** Author **                  | ** ISBN **     | ** Year ** | ** Borrowed **\n" +
+                        "01         | The little prince             | Antoine de Saint-Exupery      | 9787539998312  | 2017        | *           \n" +
+                        "02         | And Then There were none      | Agatha Christie               | 9780007136834  | 2007        | *           \n" +
+                        "03         | Harry Potter                  | Joanne Rowling                | 9573317249234  | 2008        | *           \n" +
                         "------------------------------------------------------\n"+
                         "What would you like to do?\n" +
                         "Enter 1 : View a list of books\n"  , MainMenuOutput.toString());

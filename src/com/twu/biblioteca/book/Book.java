@@ -8,13 +8,15 @@ public class Book {
     private String isbn;
     private String title;
     private Year year;
+    private String borrowed;
 
-    public Book(String index, String title, String author, String isbn, Year year) {
+    public Book(String index, String title, String author, String isbn, Year year,String borrowed) {
         this.index=index;
         this.title=title;
         this.author = author;
         this.isbn = isbn;
         this.year = year;
+        this.borrowed = borrowed;
     }
 
     public String getindex() {
@@ -34,5 +36,8 @@ public class Book {
     }
     public String getIsbn() {
         return isbn;
+    }
+    public String getBorrowed() {
+        return borrowed;
     }
 }

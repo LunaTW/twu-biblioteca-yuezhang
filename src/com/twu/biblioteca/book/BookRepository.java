@@ -7,13 +7,13 @@ import java.util.List;
 
 public class BookRepository {
     public static List<Book> availableBooks = new ArrayList<>(Arrays.asList(
-            new Book("01","The little prince","Antoine de Saint-Exupery","9787539998312", Year.of(2017)),
-            new Book("02","And Then There were none","Agatha Christie","9780007136834",Year.of(2007)),
-            new Book("03","Harry Potter","Joanne Rowling","9573317249234",Year.of(2008))
+            new Book("01","The little prince","Antoine de Saint-Exupery","9787539998312", Year.of(2017),"*"),
+            new Book("02","And Then There were none","Agatha Christie","9780007136834",Year.of(2007),"*"),
+            new Book("03","Harry Potter","Joanne Rowling","9573317249234",Year.of(2008),"*")
     ));
     public static List<Book> checkedOutBooks = new ArrayList<>(Arrays.asList(
-            new Book("04","Happy Coding","Luna","2468", Year.of(2020)),
-            new Book("05","Happy Reading","Luna","13579", Year.of(2020))
+            new Book("04","Happy Coding","Luna","2468", Year.of(2020),"*"),
+            new Book("05","Happy Reading","Luna","13579", Year.of(2020),"*")
     ));
 
     public static List<Book> getAvailableBooks() {

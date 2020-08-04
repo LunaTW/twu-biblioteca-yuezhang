@@ -1,0 +1,85 @@
+(1)
+Answer:Anand Beck
+
+SQL:
+SELECT m.name
+FROM member m, book b, checkout_item c
+WHERE m.id = c.member_id
+    AND b.id = c.book_id
+    AND b.title = 'The Hobbit';
+
+(2)
+Answer:37
+
+SQL:
+SELECT COUNT(*) 
+FROM Member m 
+WHERE NOT EXISTS (
+        SELECT * 
+        FROM Checkout_item 
+        WHERE m.id=member_id);
+
+(3)
+Answer: 
+1984
+Catcher in the Rye
+Crouching Tiger, Hidden Dragon
+Domain Driven Design
+Fellowship of the Ring
+Lawrence of Arabia
+Office Space
+Thin Red Line
+To Kill a Mockingbird
+Tom Sawyer
+
+SQL:
+SELECT Book.title
+FROM Book 
+WHERE NOT EXISTS (
+        SELECT * 
+        FROM Checkout_item 
+        WHERE book_id=Book.id)
+UNION
+SELECT Movie.title 
+FROM Movie 
+WHERE NOT EXISTS (
+        SELECT * 
+        FROM Checkout_item
+        WHERE movie_id=Movie.id);
+
+(4)   a) Add the book 'The Pragmatic Programmer’
+Answer:
+INSERT INTO book (id, title) VALUES (1000, "The Pragmatic Programmer"); 
+b) and add yourself as a member.
+Answer: INSERT INTO member (id, name) VALUES (100, "YUE ZHANG"); 
+c) Check out 'The Pragmatic Programmer'.
+Answer:
+INSERT INTO checkout_item (book_id, member_id) VALUES (1000,100);
+
+d)  Use your query from question 1 to verify that you have checked it out.
+Answer: SELECT Member.name 
+FROM Book, Checkout_item, Member
+WHERE Book.title="The Pragmatic Programmer" 
+	AND Checkout_item.book_id = Book.id 
+	AND Member.id = Checkout_item.member_id;
+
+
+(5)
+Answer:
+Anand Beck
+Frank Smith
+
+SQL:
+SELECT member.name
+FROM member
+WHERE member.id IN
+    (SELECT checkout_item.member_id
+    FROM checkout_item
+    GROUP BY checkout_item.member_id
+    HAVING COUNT(*) > 1);
+
+
+
+
+
+

@@ -89,7 +89,9 @@ public class MainMenu {
                         movieName = scanner.nextLine();
                         returnMovie(movieName);
                         break;
-
+                    case "View books checked out":
+                        displayCheckOutBook();
+                        break;
 
                     case "Quit":
                         //System.out.println("Goodbye!");
@@ -130,6 +132,14 @@ public class MainMenu {
         System.out.println(bookRepository.returnBook(input)? "Thanks for your return, have a good day!" : "This book may not borrowed from our library, please contact the librarian if not.");
     }
 
+    private static void displayCheckOutBook(){
+        System.out.printf("%-11s%-2s%-30s%-2s%-30s%-2s%-15s%-2s%-11s%-2s%-12s%n","** Index **","|","** Title **","|", "** Author **","|", "** ISBN **", "|","** Year **","|","** Borrowed **");
+        for (Book book: bookRepository.getCheckedOutBooks()){
+            System.out.printf("%-11s%-2s%-30s%-2s%-30s%-2s%-15s%-2s%-12s%-2s%-12s%n", book.getindex(),"|",book.getTitle(), "|",
+                    book.getAuthor(), "|", book.getIsbn(), "|", book.getYear(),"|",book.getBorrowed());
+        }
+    }
+
     private static void displayMovies(){
         System.out.printf("%-30s%-2s%-30s%-2s%-6s%n","** Title **","|", "** Director **","|","** Year **");
         for(Movie movie:movieRepository.getAvailableMovies()){
@@ -149,5 +159,8 @@ public class MainMenu {
         String input = movieName;
         System.out.println(movieRepository.returnMovie(input)? "Thanks for your return, have a good day" : "This movie may not borrowed from our library, please contact the librarian if not.");
     }
+
+
+
 }
 

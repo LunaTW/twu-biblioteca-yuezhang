@@ -19,7 +19,7 @@ import java.util.List;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.junit.Assert.*;
 
-public class MainMunuTest {
+public class MainMenuTest {
     private List<String> options;
     private MainMenu mainMenu;
     private ByteArrayOutputStream MainMenuOutput;
@@ -281,6 +281,22 @@ public class MainMunuTest {
         assertEquals(MovieRepository.availableMovies.stream().filter(movie -> movie.getTitle().equals("INVALID MOVIE NAME")).findFirst().orElse(null),null);
         assertThat(MainMenuOutput.toString(),containsString("This movie may not borrowed from our library, please contact the librarian if not."));
     }
+
+    //******************* (2.3) User accounts: Login and View books checked out *********************************** //
+    /*@Ignore
+    @Test //Question: 这个测试单独跑没有问题，但一起跑的时候，会收到下面借还书的影响，这个应该如何解决
+    public void ViewBooksCheckedOut(){
+        options = new ArrayList<>(Arrays.asList(option1,option2,option3,option4,option5,option6,option7,option8,option10));
+        mainMenu = new MainMenu(options,bookRepository,movieRepository,userRepository);
+        System.setIn(new ByteArrayInputStream("8".getBytes()));
+        MainMenuOutput = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(MainMenuOutput));
+        mainMenu.UserSelectOptions();
+        assertEquals("** Index **| ** Title **                   | ** Author **                  | ** ISBN **     | ** Year ** | ** Borrowed **\n" +
+                        "04         | Happy Coding                  | Luna                          | 2468           | 2020        | *           \n" +
+                        "05         | Happy Reading                 | Luna                          | 13579          | 2020        | *           \n"
+                , MainMenuOutput.toString());
+    }*/
 
 
 }

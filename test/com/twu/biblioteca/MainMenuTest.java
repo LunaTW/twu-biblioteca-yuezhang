@@ -30,7 +30,6 @@ public class MainMenuTest {
     private static String option4 = "View a list of movies";
     private static String option5 = "Checkout a movie";
     private static String option6 = "Return a movie";
-    private static String option7 = "Login";
     private static String option8 = "View books checked out";
     private static String option9 = "View my information";
     private static String option10 = "Quit";
@@ -286,7 +285,7 @@ public class MainMenuTest {
     /*@Ignore
     @Test //Question: 这个测试单独跑没有问题，但一起跑的时候，会收到下面借还书的影响，这个应该如何解决
     public void ViewBooksCheckedOut(){
-        options = new ArrayList<>(Arrays.asList(option1,option2,option3,option4,option5,option6,option7,option8,option10));
+        options = new ArrayList<>(Arrays.asList(option1,option2,option3,option4,option5,option6,option8,option10));
         mainMenu = new MainMenu(options,bookRepository,movieRepository,userRepository);
         System.setIn(new ByteArrayInputStream("8".getBytes()));
         MainMenuOutput = new ByteArrayOutputStream();

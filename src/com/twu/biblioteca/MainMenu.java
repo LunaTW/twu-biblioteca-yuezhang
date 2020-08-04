@@ -127,12 +127,10 @@ public class MainMenu {
                         ViewMyInformation(LoginID_Now);
                         break;
                     case "Quit":
-                        //System.out.println("Goodbye!");
+                        System.out.println("Goodbye!");
                         System.exit(0);
                         break;
                 }
-
-
             } else {
                 System.out.println("------------------------------------------------------");
                 System.out.println("Please try again!");
@@ -155,14 +153,17 @@ public class MainMenu {
         UserSelectOptions();
     }
 
+
     private static void checkOutBook(String bookName){
         String  input = bookName;
         System.out.println(bookRepository.checkOutBook(input)? "Thank you! Enjoy the book." : "Sorry, that book is not available.");
+        UserSelectOptions();
     }
 
     private static void returnBook(String bookName){
         String input = bookName;
         System.out.println(bookRepository.returnBook(input)? "Thanks for your return, have a good day!" : "This book may not borrowed from our library, please contact the librarian if not.");
+        UserSelectOptions();
     }
 
     private static void displayCheckOutBook(){
@@ -171,6 +172,7 @@ public class MainMenu {
             System.out.printf("%-11s%-2s%-30s%-2s%-30s%-2s%-15s%-2s%-12s%-2s%-12s%n", book.getindex(),"|",book.getTitle(), "|",
                     book.getAuthor(), "|", book.getIsbn(), "|", book.getYear(),"|",book.getBorrowed());
         }
+        UserSelectOptions();
     }
 
     private static void displayMovies(){
@@ -186,11 +188,13 @@ public class MainMenu {
     private static void checkOutMovie(String movieName){
         String input = movieName;
         System.out.println(movieRepository.checkOutMovie(input)? "Thank you! Enjoy the movie." : "Sorry, that movie is not available.");
+        UserSelectOptions();
     }
 
     private static void returnMovie(String movieName){
         String input = movieName;
         System.out.println(movieRepository.returnMovie(input)? "Thanks for your return, have a good day" : "This movie may not borrowed from our library, please contact the librarian if not.");
+        UserSelectOptions();
     }
 
     private static void ViewMyInformation(String userID) {
@@ -198,8 +202,7 @@ public class MainMenu {
         User USER = UserRepository.getUser(userID);
         System.out.printf("%-13s%-2s%-15s%-2s%-19s%-2s%-16s%n", USER.getUserID(),"|",USER.getUserName(), "|",
                 USER.getPassword(), "|", USER.getEmail());
+        UserSelectOptions();
     }
-
-
 }
 

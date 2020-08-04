@@ -11,13 +11,14 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.stream.IntStream;
 
+
 public class MainMenu {
     private static List<String> options;
     private static BookRepository bookRepository;
     private MovieRepository movieRepository;
     private UserRepository userRepository;
     private Scanner scanner;
-    private String bookName;
+    private static String bookName;
     private String movieName;
     private String UserID;
     private String password;
@@ -64,6 +65,12 @@ public class MainMenu {
                     case "View a list of books":
                         displayBooks();
                         break;
+                    case "Checkout a book":
+                        System.out.println("Which book would you like to checkout?[Please input BOOK NAME]");
+                        bookName = scanner.nextLine();
+                        checkOutBook(bookName);
+                        break;
+
                 }
 
 
@@ -87,6 +94,11 @@ public class MainMenu {
         System.out.println("------------------------------------------------------");
         PrintAllMenuList();
         UserSelectOptions();
+    }
+
+    private static void checkOutBook(String bookName){
+        String  input = bookName;
+        System.out.println(bookRepository.checkOutBook(input)? "Thank you! Enjoy the book." : "Sorry, that book is not available.");
     }
 
 }

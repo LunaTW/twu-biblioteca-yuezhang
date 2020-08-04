@@ -13,8 +13,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
+import static org.hamcrest.CoreMatchers.containsString;
+import static org.junit.Assert.*;
 
 public class MainMunuTest {
     private List<String> options;
@@ -131,9 +131,35 @@ public class MainMunuTest {
                         "Enter 1 : View a list of books\n"  , MainMenuOutput.toString());
     }
 
+    //*********************************** (1.7) Checkout a book *********************************** //
+    /*  1. 正确借书（可借书单里有这本书）=> 可借书单里没有了这本书 & 已借出书单里有了这本书
+        2. 错误借书 可借书单里无此书 => 此书暂时不可借
+     */
+    @Test
+    public void CheckoutABook_Successfully(){
+        options = new ArrayList<>(Arrays.asList(option1,option2));
+        mainMenu = new MainMenu(options,bookRepository,movieRepository,userRepository);
+        //测试 初始状态，可借书单里有 The little prince 这本书
+        assertNotEquals(BookRepository.availableBooks.stream().filter(book -> book.getTitle().equals("The little prince")).findFirst().orElse(null),null);
+        //测试 操作之后，可借书单里没有了 The little prince 这本书
+        MainMenuOutput = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(MainMenuOutput));
+        System.setIn(new ByteArrayInputStream("2\nThe little prince".getBytes()));
+        mainMenu.UserSelectOptions();
+        assertEquals(BookRepository.availableBooks.stream().filter(book -> book.getTitle().equals("The little prince")).findFirst().orElse(null),null);
+        assertThat(MainMenuOutput.toString(),containsString("Thank you! Enjoy the book."));
+    }
 
-
-
+    @Test
+    public void CheckoutABook_Unsuccessfully(){
+        options = new ArrayList<>(Arrays.asList(option1,option2));
+        mainMenu = new MainMenu(options,bookRepository,movieRepository,userRepository);
+        System.setIn(new ByteArrayInputStream("2\nThis is an INVALID BookName".getBytes()));
+        MainMenuOutput = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(MainMenuOutput));
+        mainMenu.UserSelectOptions();
+        assertThat(MainMenuOutput.toString(),containsString("Sorry, that book is not available."));
+    }
 
 
 

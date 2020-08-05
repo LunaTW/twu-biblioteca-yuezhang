@@ -37,10 +37,13 @@
 >		This file is under twu-biblioteca-yuezhang/src/com/twu/biblioteca/BibliotecaAPP.java
 >	2. Some problems you may encounter:
 >		1. @Test is RED color, which means java: package org.junit.jupiter.api does not exist.
+>
 >			method 1: import org.junit.jupiter.api.Test;	(put this line on the top of test document)
+>
 >			method 2: Place the mouse over the red word, then click the keyboard "option + renturn", then the import sentence in Method 1 will appear automatically.
 >		2. If the system prompts that some databases are missing, you can use the following methods to fix:
-			Open File -> project structure -> Modules, then click '+", now you can choose add 'JUnit5.4','system-rules-1.19.0.jar' and 'junit4.11.jar' whcih are in the lib file.
+>
+>			Open File -> project structure -> Modules, then click '+", now you can choose add 'JUnit5.4','system-rules-1.19.0.jar' and 'junit4.11.jar' whcih are in the lib file.
 >	2. You can try this system follow the diagram below.
 >
 >![picture-w150](https://github.com/LunaTW/twu-biblioteca-yuezhang/blob/master/Readme_source/Diagram.png?raw=true?)

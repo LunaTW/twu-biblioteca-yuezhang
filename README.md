@@ -52,5 +52,6 @@
 >	3.Use small commits during development
 
 
-#### PS: Thanks for using Biblioteca system. Please feel free to contact with me if you have have questions with this system. 
-	My email: unswluna@gmail.com
+#### PS: Thanks for using Biblioteca system. 
+	Please feel free to contact with me if you have have questions with this system. 
+	My email address: unswluna@gmail.com

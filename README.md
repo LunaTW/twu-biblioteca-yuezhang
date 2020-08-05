@@ -39,3 +39,18 @@
 >
 >![picture-w150](https://github.com/LunaTW/twu-biblioteca-yuezhang/blob/master/Readme_source/Diagram.png?raw=true?)
 
+### Four:	The principle behind the system
+>	1.Built in TDD approach
+>
+>		1. First analyzed all the needs of users
+>		2. Then constructed the smallest feasible solution
+>		3. Next, based on each story card by using 'AS A.., I want.., SO THAT...'. 
+>		4. Repeat The TDD Cycle:	
+>			Write a Test -> complie -> fix complie errors -> run failing test -> write code -> run all tests -> refator -> write a test -> ...
+>	2.Use Object-Oriented Programming principles in writing well-structured code
+>
+>	3.Use small commits during development
+
+
+#### PS: Thanks for using Biblioteca system. Please feel free to contact with me if you have have questions with this system. 
+	My email: unswluna@gmail.com

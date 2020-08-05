@@ -7,10 +7,10 @@
    
 
 * This README document have four points:
-	+ 1.How to installation and configuration environment.
-	+ 2.Library database (temporary)
-	+ 3.How to use the system
-	+ 4.The principle behind the system
+	+ 1. How to installation and configuration environment.
+	+ 2. Library database (temporary)
+	+ 3. How to use the system
+	+ 4. The principle behind the system
 
 ### One:	How to installation and configuration environment.
 > 1.Download and install Java JDK 8.
@@ -29,5 +29,4 @@
 ### Two:	Library database
 > This is current database of Biblioteca library for testing, it will connect to the real database after officially used.
 > 
-
 > ![picture](https://github.com/LunaTW/twu-biblioteca-yuezhang/blob/master/Readme_source/Biblioteca%20Database.png?raw=true)

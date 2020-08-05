@@ -3,6 +3,7 @@ package com.twu.biblioteca;
 import com.twu.biblioteca.book.BookRepository;
 import com.twu.biblioteca.movie.MovieRepository;
 import com.twu.biblioteca.user.UserRepository;
+import org.junit.Ignore;
 import org.junit.jupiter.api.Test;
 
 import java.io.ByteArrayInputStream;
@@ -279,18 +280,22 @@ public class MainMenuTest {
     }
 
     //******************* (2.3) User accounts: Login and View books checked out *********************************** //
+    //Moved to 'BookRepositoryTest' file
     /*@Ignore
     @Test //Question: 这个测试单独跑没有问题，但一起跑的时候，会收到下面借还书的影响，这个应该如何解决
     public void ViewBooksCheckedOut(){
-        options = new ArrayList<>(Arrays.asList(option1,option2,option3,option4,option5,option6,option8,option10));
+        options = new ArrayList<>(Arrays.asList(option8));
         mainMenu = new MainMenu(options,bookRepository,movieRepository,userRepository);
-        System.setIn(new ByteArrayInputStream("8".getBytes()));
+        System.setIn(new ByteArrayInputStream("1".getBytes()));
         MainMenuOutput = new ByteArrayOutputStream();
         System.setOut(new PrintStream(MainMenuOutput));
         mainMenu.UserSelectOptions();
-        assertEquals("** Index **| ** Title **                   | ** Author **                  | ** ISBN **     | ** Year **  | ** Borrowed **\n" +
-                        "04         | Happy Coding                  | Luna                          | 2468           | 2020        | Laura       \n" +
-                        "05         | Happy Reading                 | Luna                          | 13579          | 2020        | Dannie      \n"
+        assertEquals("** Index **| ** Title **                   | ** Author **                  | ** ISBN **     | ** Year **  \n" +
+                        "04         | Happy Coding                  | Luna                          | 2468           | 2020        \n" +
+                        "05         | Happy Reading                 | Luna                          | 13579          | 2020        \n"+
+                        "------------------------------------------------------\n" +
+                        "What would you like to do?\n"+
+                        "Enter 1 : View books checked out\n"
                 , MainMenuOutput.toString());
     }*/
 

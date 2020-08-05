@@ -25,4 +25,11 @@ public class UserRepository {
     public static User getUserByUserID(String UserID){
         return availableUserInformations.stream().filter(availableUserInformation->availableUserInformation.getUserID().equals(UserID)).findFirst().get();
     }
+
+    public static void ViewMyInformation(String userID) {
+        System.out.printf("%-13s%-2s%-15s%-2s%-19s%-2s%-16s%n","** UserID **","|","** UserName **","|", "** PassWord **","|", "** Email **");
+        User USER = UserRepository.getUser(userID);
+        System.out.printf("%-13s%-2s%-15s%-2s%-19s%-2s%-16s%n", USER.getUserID(),"|",USER.getUserName(), "|",
+                USER.getPassword(), "|", USER.getEmail());
+    }
 }

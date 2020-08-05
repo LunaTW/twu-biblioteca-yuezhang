@@ -13,6 +13,8 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.stream.IntStream;
 
+import static org.junit.Assert.assertEquals;
+
 
 public class MainMenu {
     private static List<String> options;
@@ -44,19 +46,12 @@ public class MainMenu {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Please input your UserID: ");
         UserID = scanner.nextLine();
+        if(UserRepository.getUser(UserID) == null){
+            System.out.println("This is not a valid UserID, please try again! ");
+            login();
+        }
         System.out.println("Please input your Password: ");
         password = scanner.nextLine();
-        //System.out.println("Please click return");
-        //UserSelectedOption = scanner.nextLine();
-        if(UserID == "\n"  ){
-            System.out.println("UserID cannot be empty!");
-            login();
-        }
-        if(password =="\n" ){
-            System.out.println("UserID cannot be empty!");
-            login();
-        }
-
         if (UserRepository.areValidCredentials(UserID,password)){
             System.out.println("UserID : "+ UserID+"\n"+
                     "Successful login\n------------------------------------------------------");
@@ -64,7 +59,7 @@ public class MainMenu {
             PrintAllMenuList();
             UserSelectOptions();
         }else{
-            System.out.println("Sorry that's not a valid ID/PASSWORD");
+            System.out.println("Sorry that's not a correct PASSWORD, please again! ");
             login();
         }
     }
@@ -95,36 +90,60 @@ public class MainMenu {
                 String optionChoice = options.get(Integer.valueOf(UserSelectedOption) - 1); //index 比本身小1
                 switch (optionChoice){
                     case "View a list of books":
-                        displayBooks();
+                        bookRepository.displayBooks();
+                        System.out.println("------------------------------------------------------");
+                        PrintAllMenuList();
+                        UserSelectOptions();
                         break;
                     case "Checkout a book":
                         System.out.println("Which book would you like to checkout?[Please input BOOK NAME]");
                         bookName = scanner.nextLine();
-                        checkOutBook(bookName);
+                        bookRepository.checkOutBook(bookName);
+                        System.out.println("------------------------------------------------------");
+                        PrintAllMenuList();
+                        UserSelectOptions();
                         break;
                     case "Return a book":
                         System.out.println("Which book would you like to Return?[Please input BOOK NAME]");
                         bookName = scanner.nextLine();
-                        returnBook(bookName);
+                        bookRepository.returnBook(bookName);
+                        System.out.println("------------------------------------------------------");
+                        PrintAllMenuList();
+                        UserSelectOptions();
+                        break;
+                    case "View books checked out":
+                        bookRepository.displayCheckOutBook();
+                        System.out.println("------------------------------------------------------");
+                        PrintAllMenuList();
+                        UserSelectOptions();
                         break;
                     case "View a list of movies":
-                        displayMovies();
+                        movieRepository.displayMovies();
+                        System.out.println("------------------------------------------------------");
+                        PrintAllMenuList();
+                        UserSelectOptions();
                         break;
                     case "Checkout a movie":
                         System.out.println("Which movie would you like to checkout?[Please input MOVIE NAME]");
                         movieName = scanner.nextLine();
-                        checkOutMovie(movieName);
+                        movieRepository.checkOutMovie(movieName);
+                        System.out.println("------------------------------------------------------");
+                        PrintAllMenuList();
+                        UserSelectOptions();
                         break;
                     case "Return a movie":
                         System.out.println("Which movie would you like to Return?[Please input MOVIE NAME]");
                         movieName = scanner.nextLine();
-                        returnMovie(movieName);
-                        break;
-                    case "View books checked out":
-                        displayCheckOutBook();
+                        movieRepository.returnMovie(movieName);
+                        System.out.println("------------------------------------------------------");
+                        PrintAllMenuList();
+                        UserSelectOptions();
                         break;
                     case "View my information":
-                        ViewMyInformation(LoginID_Now);
+                        UserRepository.ViewMyInformation(LoginID_Now);
+                        System.out.println("------------------------------------------------------");
+                        PrintAllMenuList();
+                        UserSelectOptions();
                         break;
                     case "Quit":
                         System.out.println("Goodbye!");
@@ -133,88 +152,11 @@ public class MainMenu {
                 }
             } else {
                 System.out.println("------------------------------------------------------");
-                System.out.println("Please try again!");
+                PrintAllMenuList();
                 UserSelectOptions();
             }
         }
 
-    }
-
-
-    //************************************* Function ********************************//
-    private static void displayBooks(){
-        System.out.printf("%-11s%-2s%-30s%-2s%-30s%-2s%-15s%-2s%-11s%-2s%-12s%n","** Index **","|","** Title **","|", "** Author **","|", "** ISBN **", "|","** Year **","|","** Borrowed **");
-        for (Book book: bookRepository.getAvailableBooks()){
-            System.out.printf("%-11s%-2s%-30s%-2s%-30s%-2s%-15s%-2s%-12s%-2s%-12s%n", book.getindex(),"|",book.getTitle(), "|",
-                    book.getAuthor(), "|", book.getIsbn(), "|", book.getYear(),"|",book.getBorrowed());
-        }
-        System.out.println("------------------------------------------------------");
-        PrintAllMenuList();
-        UserSelectOptions();
-    }
-
-
-    private static void checkOutBook(String bookName){
-        String  input = bookName;
-        System.out.println(bookRepository.checkOutBook(input)? "Thank you! Enjoy the book." : "Sorry, that book is not available.");
-        System.out.println("------------------------------------------------------");
-        PrintAllMenuList();
-        UserSelectOptions();
-    }
-
-    private static void returnBook(String bookName){
-        String input = bookName;
-        System.out.println(bookRepository.returnBook(input)? "Thanks for your return, have a good day!" : "This book may not borrowed from our library, please contact the librarian if not.");
-        System.out.println("------------------------------------------------------");
-        PrintAllMenuList();
-        UserSelectOptions();
-    }
-
-    private static void displayCheckOutBook(){
-        System.out.printf("%-11s%-2s%-30s%-2s%-30s%-2s%-15s%-2s%-11s%-2s%-12s%n","** Index **","|","** Title **","|", "** Author **","|", "** ISBN **", "|","** Year **","|","** Borrowed **");
-        for (Book book: bookRepository.getCheckedOutBooks()){
-            System.out.printf("%-11s%-2s%-30s%-2s%-30s%-2s%-15s%-2s%-12s%-2s%-12s%n", book.getindex(),"|",book.getTitle(), "|",
-                    book.getAuthor(), "|", book.getIsbn(), "|", book.getYear(),"|",book.getBorrowed());
-        }
-        System.out.println("------------------------------------------------------");
-        PrintAllMenuList();
-        UserSelectOptions();
-    }
-
-    private static void displayMovies(){
-        System.out.printf("%-30s%-2s%-30s%-2s%-6s%n","** Title **","|", "** Director **","|","** Year **");
-        for(Movie movie:movieRepository.getAvailableMovies()){
-            System.out.printf("%-30s%-2s%-30s%-2s%-6s%n", movie.getTitle(),"|",movie.getDirector(),"|",movie.getYear());
-        }
-        System.out.println("------------------------------------------------------");
-        PrintAllMenuList();
-        UserSelectOptions();
-    }
-
-    private static void checkOutMovie(String movieName){
-        String input = movieName;
-        System.out.println(movieRepository.checkOutMovie(input)? "Thank you! Enjoy the movie." : "Sorry, that movie is not available.");
-        System.out.println("------------------------------------------------------");
-        PrintAllMenuList();
-        UserSelectOptions();
-    }
-
-    private static void returnMovie(String movieName){
-        String input = movieName;
-        System.out.println(movieRepository.returnMovie(input)? "Thanks for your return, have a good day" : "This movie may not borrowed from our library, please contact the librarian if not.");
-        System.out.println("------------------------------------------------------");
-        PrintAllMenuList();
-        UserSelectOptions();
-    }
-
-    private static void ViewMyInformation(String userID) {
-        System.out.printf("%-13s%-2s%-15s%-2s%-19s%-2s%-16s%n","** UserID **","|","** UserName **","|", "** PassWord **","|", "** Email **");
-        User USER = UserRepository.getUser(userID);
-        System.out.printf("%-13s%-2s%-15s%-2s%-19s%-2s%-16s%n", USER.getUserID(),"|",USER.getUserName(), "|",
-                USER.getPassword(), "|", USER.getEmail());
-        System.out.println("------------------------------------------------------");
-        PrintAllMenuList();
-        UserSelectOptions();
     }
 }
 

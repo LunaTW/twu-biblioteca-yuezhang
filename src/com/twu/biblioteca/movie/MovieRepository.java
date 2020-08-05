@@ -32,7 +32,7 @@ public class MovieRepository {
         availableMovies.add(movie);
     }
 
-    public static boolean checkOutMovie(String title){
+    public static boolean judgment_checkOutMovie(String title){
         Movie MovieWouldLikeToCheckOut = availableMovies.stream().filter(movie -> movie.getTitle().equals(title))
                 .findFirst().orElse(null);
         if(MovieWouldLikeToCheckOut != null){
@@ -44,7 +44,7 @@ public class MovieRepository {
         }
     }
 
-    public static boolean returnMovie(String title) {
+    public static boolean judgment_returnMovie(String title) {
         Movie MovieWouldLikeToReturn = checkedOutMovies.stream().filter(movie -> movie.getTitle().equals(title))
                 .findFirst().orElse(null);
         if(MovieWouldLikeToReturn != null){
@@ -54,6 +54,22 @@ public class MovieRepository {
         }else{
             return false;
         }
+    }
 
+    public static void displayMovies(){
+        System.out.printf("%-30s%-2s%-30s%-2s%-6s%n","** Title **","|", "** Director **","|","** Year **");
+        for(Movie movie:getAvailableMovies()){
+            System.out.printf("%-30s%-2s%-30s%-2s%-6s%n", movie.getTitle(),"|",movie.getDirector(),"|",movie.getYear());
+        }
+    }
+
+    public static void checkOutMovie(String movieName){
+        String input = movieName;
+        System.out.println(judgment_checkOutMovie(input)? "Thank you! Enjoy the movie." : "Sorry, that movie is not available.");
+    }
+
+    public static void returnMovie(String movieName){
+        String input = movieName;
+        System.out.println(judgment_returnMovie(input)? "Thanks for your return, have a good day" : "This movie may not borrowed from our library, please contact the librarian if not.");
     }
 }

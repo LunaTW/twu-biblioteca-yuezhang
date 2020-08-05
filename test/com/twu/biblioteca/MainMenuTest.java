@@ -74,8 +74,8 @@ public class MainMenuTest {
         mainMenu.UserSelectOptions();
         assertEquals(InvalidOption + "\n"+
                 "------------------------------------------------------\n"+
-                "Please try again!\n"
-                , MainMenuOutput.toString());
+                "What would you like to do?\n" +
+                "Enter 1 : View a list of books\n"  , MainMenuOutput.toString());
 
         // 测试小数不能通过验证
         MainMenuOutput = new ByteArrayOutputStream();
@@ -83,9 +83,9 @@ public class MainMenuTest {
         System.setIn(new ByteArrayInputStream("2.5".getBytes()));
         mainMenu.UserSelectOptions();
         assertEquals(InvalidOption + "\n"+
-                        "------------------------------------------------------\n"+
-                        "Please try again!\n"
-                , MainMenuOutput.toString());
+                "------------------------------------------------------\n"+
+                "What would you like to do?\n" +
+                "Enter 1 : View a list of books\n"  , MainMenuOutput.toString());
 
         // 测试负数不能通过验证
         MainMenuOutput = new ByteArrayOutputStream();
@@ -93,9 +93,9 @@ public class MainMenuTest {
         System.setIn(new ByteArrayInputStream("-3".getBytes()));
         mainMenu.UserSelectOptions();
         assertEquals(InvalidOption + "\n"+
-                        "------------------------------------------------------\n"+
-                        "Please try again!\n"
-                , MainMenuOutput.toString());
+                "------------------------------------------------------\n"+
+                "What would you like to do?\n" +
+                "Enter 1 : View a list of books\n"  , MainMenuOutput.toString());
 
         // 测试非数字类不能通过验证
         MainMenuOutput = new ByteArrayOutputStream();
@@ -103,9 +103,9 @@ public class MainMenuTest {
         System.setIn(new ByteArrayInputStream("list of book".getBytes()));
         mainMenu.UserSelectOptions();
         assertEquals(InvalidOption + "\n"+
-                        "------------------------------------------------------\n"+
-                        "Please try again!\n"
-                , MainMenuOutput.toString());
+                "------------------------------------------------------\n"+
+                "What would you like to do?\n" +
+                "Enter 1 : View a list of books\n"  , MainMenuOutput.toString());
     }
 
     //*********************************** （1.2）查看书籍清单 *********************************** //
@@ -124,7 +124,8 @@ public class MainMenuTest {
         // 选择了有效的选项，则没有报错
         assertNotEquals(InvalidOption + "\n"+
                         "------------------------------------------------------\n"+
-                        "Please try again!\n" , MainMenuOutput.toString());
+                        "What would you like to do?\n" +
+                        "Enter 1 : View a list of books\n"  , MainMenuOutput.toString());
 
         //包含了完成的书籍信息
         assertEquals("** Index **| ** Title **                   | ** Author **                  | ** ISBN **     | ** Year ** | ** Borrowed **\n" +
@@ -309,7 +310,10 @@ public class MainMenuTest {
         System.setOut(new PrintStream(MainMenuOutput));
         mainMenu.UserSelectOptions();
         assertEquals("** UserID ** | ** UserName ** | ** PassWord **     | ** Email **     \n" +
-                        "5102636      | Luna           | moneymoneymoney    | unswluna@gmail.com\n"
+                        "5102636      | Luna           | moneymoneymoney    | unswluna@gmail.com\n"+
+                        "------------------------------------------------------\n"+
+                        "What would you like to do?\n" +"Enter 1 : View my information\n"
+
                 , MainMenuOutput.toString());
     }
 

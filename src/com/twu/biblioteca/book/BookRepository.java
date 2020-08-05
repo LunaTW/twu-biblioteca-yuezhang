@@ -19,7 +19,7 @@ public class BookRepository {
     public static List<Book> getAvailableBooks() {
         return availableBooks;
     }
-    public List<Book> getCheckedOutBooks() {
+    public static List<Book> getCheckedOutBooks() {
         return checkedOutBooks;
     }
 
@@ -30,7 +30,7 @@ public class BookRepository {
         availableBooks.add(book);
     }
 
-    public static boolean checkOutBook(String title){
+    public static boolean judgment_checkOutBook(String title){
         Book BookWouldLikeToCheckOut = availableBooks.stream().filter(book -> book.getTitle().equals(title))
                 .findFirst().orElse(null);
         if ( BookWouldLikeToCheckOut != null){
@@ -42,7 +42,7 @@ public class BookRepository {
         }
     }
 
-    public static boolean returnBook(String title){
+    public static boolean judgment_returnBook(String title){
         Book BookWouldLikeToReturn = checkedOutBooks.stream().filter(book -> book.getTitle().equals(title))
                 .findFirst().orElse(null);
         if ( BookWouldLikeToReturn != null){
@@ -51,6 +51,32 @@ public class BookRepository {
             return true;
         } else {
             return false;
+        }
+    }
+
+    public static void displayBooks(){
+        System.out.printf("%-11s%-2s%-30s%-2s%-30s%-2s%-15s%-2s%-11s%-2s%-12s%n","** Index **","|","** Title **","|", "** Author **","|", "** ISBN **", "|","** Year **","|","** Borrowed **");
+        for (Book book: getAvailableBooks()){
+            System.out.printf("%-11s%-2s%-30s%-2s%-30s%-2s%-15s%-2s%-12s%-2s%-12s%n", book.getindex(),"|",book.getTitle(), "|",
+                    book.getAuthor(), "|", book.getIsbn(), "|", book.getYear(),"|",book.getBorrowed());
+        }
+    }
+
+    public static void checkOutBook(String bookName){
+        String  input = bookName;
+        System.out.println(judgment_checkOutBook(input)? "Thank you! Enjoy the book." : "Sorry, that book is not available.");
+    }
+
+    public static void returnBook(String bookName){
+        String input = bookName;
+        System.out.println(judgment_returnBook(input)? "Thanks for your return, have a good day!" : "This book may not borrowed from our library, please contact the librarian if not.");
+    }
+
+    public static void displayCheckOutBook(){
+        System.out.printf("%-11s%-2s%-30s%-2s%-30s%-2s%-15s%-2s%-11s%-2s%-12s%n","** Index **","|","** Title **","|", "** Author **","|", "** ISBN **", "|","** Year **","|","** Borrowed **");
+        for (Book book: getCheckedOutBooks()){
+            System.out.printf("%-11s%-2s%-30s%-2s%-30s%-2s%-15s%-2s%-12s%-2s%-12s%n", book.getindex(),"|",book.getTitle(), "|",
+                    book.getAuthor(), "|", book.getIsbn(), "|", book.getYear(),"|",book.getBorrowed());
         }
     }
 }

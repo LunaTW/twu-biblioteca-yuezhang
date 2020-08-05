@@ -30,7 +30,6 @@ public class BibliotecaApp {
         WelcomeMessage.WelcomeMessageInScreen();
         MainMenu MainMenu = new MainMenu(options,bookRepository,movieRepository,userRepository);
 
-        //MainMenu.PrintAllMenuList();
         System.out.println("Please log in to your account to proceed to the next step！");
         System.out.println("!!! Remember to Quit when you left\n");
 

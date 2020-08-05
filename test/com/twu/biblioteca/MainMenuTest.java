@@ -310,7 +310,7 @@ public class MainMenuTest {
         System.setOut(new PrintStream(MainMenuOutput));
         mainMenu.UserSelectOptions();
         assertEquals("** UserID ** | ** UserName ** | ** PassWord **     | ** Email **     \n" +
-                        "5102636      | Luna           | moneymoneymoney    | unswluna@gmail.com\n"+
+                        "5102636      | Luna           | money              | unswluna@gmail.com\n"+
                         "------------------------------------------------------\n"+
                         "What would you like to do?\n" +"Enter 1 : View my information\n"
 

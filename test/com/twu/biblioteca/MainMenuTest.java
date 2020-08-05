@@ -3,11 +3,7 @@ package com.twu.biblioteca;
 import com.twu.biblioteca.book.BookRepository;
 import com.twu.biblioteca.movie.MovieRepository;
 import com.twu.biblioteca.user.UserRepository;
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Rule;
 import org.junit.jupiter.api.Test;
-import org.junit.contrib.java.lang.system.ExpectedSystemExit;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;

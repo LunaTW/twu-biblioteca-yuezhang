@@ -32,8 +32,10 @@
 > ![picture](https://github.com/LunaTW/twu-biblioteca-yuezhang/blob/master/Readme_source/Biblioteca%20Database.png?raw=true)
 
 ### Three:	How to use Biblioteca system
-> This is diagram of Biblioteca System, You can use it follow this flow.
+> 	1.Run BibliotecaAPP.java File.
 >
->![picture](https://github.com/LunaTW/twu-biblioteca-yuezhang/blob/master/Readme_source/Diagram.png?raw=true)
-
+>		This file is under twu-biblioteca-yuezhang/src/com/twu/biblioteca/BibliotecaAPP.java
+>	2. You can try this system follow the diagram below.
+>
+>![picture-w150](https://github.com/LunaTW/twu-biblioteca-yuezhang/blob/master/Readme_source/Diagram.png?raw=true?)
 

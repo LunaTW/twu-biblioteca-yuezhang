@@ -12,8 +12,8 @@ public class BookRepository {
             new Book("03","Harry Potter","Joanne Rowling","9573317249234",Year.of(2008),"*")
     ));
     public static List<Book> checkedOutBooks = new ArrayList<>(Arrays.asList(
-            new Book("04","Happy Coding","Luna","2468", Year.of(2020),"*"),
-            new Book("05","Happy Reading","Luna","13579", Year.of(2020),"*")
+            new Book("04","Happy Coding","Luna","2468", Year.of(2020),"Laura"),
+            new Book("05","Happy Reading","Luna","13579", Year.of(2020),"Dannie")
     ));
 
     public static List<Book> getAvailableBooks() {
@@ -55,10 +55,10 @@ public class BookRepository {
     }
 
     public static void displayBooks(){
-        System.out.printf("%-11s%-2s%-30s%-2s%-30s%-2s%-15s%-2s%-11s%-2s%-12s%n","** Index **","|","** Title **","|", "** Author **","|", "** ISBN **", "|","** Year **","|","** Borrowed **");
+        System.out.printf("%-11s%-2s%-30s%-2s%-30s%-2s%-15s%-2s%-11s%n","** Index **","|","** Title **","|", "** Author **","|", "** ISBN **", "|","** Year **");
         for (Book book: getAvailableBooks()){
-            System.out.printf("%-11s%-2s%-30s%-2s%-30s%-2s%-15s%-2s%-12s%-2s%-12s%n", book.getindex(),"|",book.getTitle(), "|",
-                    book.getAuthor(), "|", book.getIsbn(), "|", book.getYear(),"|",book.getBorrowed());
+            System.out.printf("%-11s%-2s%-30s%-2s%-30s%-2s%-15s%-2s%-12s%n", book.getindex(),"|",book.getTitle(), "|",
+                    book.getAuthor(), "|", book.getIsbn(), "|", book.getYear());
         }
     }
 
@@ -73,7 +73,7 @@ public class BookRepository {
     }
 
     public static void displayCheckOutBook(){
-        System.out.printf("%-11s%-2s%-30s%-2s%-30s%-2s%-15s%-2s%-11s%-2s%-12s%n","** Index **","|","** Title **","|", "** Author **","|", "** ISBN **", "|","** Year **","|","** Borrowed **");
+        System.out.printf("%-11s%-2s%-30s%-2s%-30s%-2s%-15s%-2s%-12s%-2s%-12s%n","** Index **","|","** Title **","|", "** Author **","|", "** ISBN **", "|","** Year **","|","** Borrowed **");
         for (Book book: getCheckedOutBooks()){
             System.out.printf("%-11s%-2s%-30s%-2s%-30s%-2s%-15s%-2s%-12s%-2s%-12s%n", book.getindex(),"|",book.getTitle(), "|",
                     book.getAuthor(), "|", book.getIsbn(), "|", book.getYear(),"|",book.getBorrowed());
